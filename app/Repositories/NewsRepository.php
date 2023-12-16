@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class NewsRepository implements NewsRepositoryInterface
 {
 
-    public function all()
+    public function all(): object
     {
-        return (object) NewsModel::all();
+        return NewsModel::all();
     }
 
-    public function show(string $id)
+    public function show(string $id): object
     {
-        return (object) NewsModel::where('id', $id)->get();
+        return NewsModel::where('id', $id)->get();
     }
 
-    public function create(object $request)
+    public function create(object $request): object
     {
         if (auth()->user() != null)
         {
@@ -27,12 +27,12 @@ class NewsRepository implements NewsRepositoryInterface
             $create->content = $request->content;
             $create->save();
 
-            return (array) [
+            return (object) [
                 'ok' => true,
                 'message' => "Новость добавлена",
             ];
         }else{
-            return (array) [
+            return (object) [
                 'message' => [
                     'ok' => false,
                     'error' => 403,
@@ -42,7 +42,7 @@ class NewsRepository implements NewsRepositoryInterface
         }
     }
 
-    public function update(object $request, string $id)
+    public function update(object $request, string $id): object
     {
         if (auth()->user() != null)
         {
@@ -54,12 +54,12 @@ class NewsRepository implements NewsRepositoryInterface
                 'content' => $content,
             ]);
 
-            return (array) [
+            return (object) [
                 'ok' => true,
                 'message' => "Новость обновлена",
             ];
         }else{
-            return (array) [
+            return (object) [
                 'message' => [
                     'ok' => false,
                     'error' => 403,
@@ -69,19 +69,19 @@ class NewsRepository implements NewsRepositoryInterface
         }
     }
 
-    public function delete(string $id)
+    public function delete(string $id): object
     {
         if (auth()->user() != null)
         {
             $delete = NewsModel::where('id', $id)->delete();
-            return (array) [
+            return (object) [
                 'message' => [
                     'ok' => true,
                     'num_delete_string' => $delete,
                 ]
             ];
         }else{
-            return (array) [
+            return (object) [
                 'message' => [
                     'ok' => false,
                     'error' => 403,

@@ -26,7 +26,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function login()
+    public function login(): object
     {
         $credentials = request(['email', 'password']);
 
@@ -34,14 +34,14 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return (object) $this->respondWithToken($token);
     }
 
     /**
      * User registration
      */
 
-    public function registration()
+    public function registration(): object
     {
         $name = request('name');
         $email = request('email');
@@ -53,7 +53,7 @@ class AuthController extends Controller
         $user->password = Hash::make($password);
         $user->save();
 
-        return response()->json(['message' => 'Successfully registration!']);
+        return (object) response()->json(['message' => 'Successfully registration!']);
     }
 
     /**
@@ -62,11 +62,11 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function logout()
+    public function logout(): object
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return (object) response()->json(['message' => 'Successfully logged out']);
     }
 
     /**
@@ -75,9 +75,9 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function refresh()
+    public function refresh(): object
     {
-        return $this->respondWithToken(auth()->refresh());
+        return (object) $this->respondWithToken(auth()->refresh());
     }
 
     /**
@@ -86,9 +86,9 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function me()
+    public function me(): object
     {
-        return response()->json(auth()->user());
+        return (object) response()->json(auth()->user());
     }
 
     /**
@@ -99,9 +99,9 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     
-    protected function respondWithToken($token)
+    protected function respondWithToken($token): object
     {
-        return response()->json([
+        return (object) response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60

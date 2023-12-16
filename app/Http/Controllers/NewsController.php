@@ -9,7 +9,7 @@ use Termwind\Components\Dd;
 
 class NewsController extends Controller
 {
-    private $NewsRepository;
+    private object $NewsRepository;
 
     public function __construct(NewsRepository $NewsRepository)
     {
@@ -19,7 +19,7 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): object
     {
         return response()->json($this->NewsRepository->all());
     }
@@ -27,7 +27,7 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Request $request): object
     {
         return response()->json($this->NewsRepository->create($request));
     }
@@ -35,7 +35,7 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): object
     {
         return response()->json($this->NewsRepository->show($id));
     }
@@ -43,7 +43,7 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): object
     {
         return response()->json($this->NewsRepository->update($request, $id));
     }
@@ -51,7 +51,7 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): object
     {
         return response()->json($this->NewsRepository->delete($id));
     }
